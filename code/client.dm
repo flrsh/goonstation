@@ -58,7 +58,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	var/ignore_sound_flags = 0
 
-	var/has_contestwinner_medal = 0
+	var/list/available_emojis = null
 
 	var/antag_tokens //Number of antagonist tokens available to the player
 	var/using_antag_token = 0 //Set when the player readies up at round start, and opts to redeem a token.
@@ -417,12 +417,10 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	clients += src
 
 	SPAWN(0) // to not lock up spawning process
-		if (IsGuestKey(src.key))
-			src.has_contestwinner_medal = 0
-		else if (!config || !config.medal_hub || !config.medal_password)
-			src.has_contestwinner_medal = 0
-		else
-			src.has_contestwinner_medal = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
+		if (!IsGuestKey(src.key) && config && config.medal_hub && config.medal_password)
+			src.available_emojis["shelterfrog"] = src.cloud_available() && src.cloud_get("donor")
+			src.available_emojis["shelterbee"] = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
+			src.available_emojis["imcoder"] = world.GetMedal("Contributor", src.key, config.medal_hub, config.medal_password)
 
 	src.initSizeHelpers()
 

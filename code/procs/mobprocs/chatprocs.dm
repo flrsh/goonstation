@@ -597,11 +597,14 @@
 		else if (src.client.is_mentor() && !src.client.stealth)
 			ooc_class = "mentorooc"
 
-		if( src.client.cloud_available() && src.client.cloud_get("donor") )
+		if(src.client.available_emojis["shelterfrog"])
 			msg = replacetext(msg, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
 
-		if (src.client.has_contestwinner_medal)
+		if (src.client.available_emojis["shelterbee"])
 			msg = replacetext(msg, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
+
+		if (src.client.available_emojis["imcoder"])
+			msg = replacetext(msg, ":imcoder:", "<img src='http://stuff.goonhub.com/imcoder.png' width=32>")
 
 		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 
